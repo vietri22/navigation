@@ -10,6 +10,6 @@ void scanBall(int numDivisions);
 void scan(int angle);
 void setup_couleur();
 int LireCouleur();
-int checkline();
+int checkline(int &fm);
 #endif
 

@@ -180,14 +180,16 @@ void scanBall(int numDivisions){
   turnAngle(posBall);
   turnAngle((-posBall));
 }
-int checkline(){
+int checkline(int &fm){
+  Serial.println("checkline");
   int gauche_3=analogRead(A7), gauche_2=analogRead(A6), gauche_1=analogRead(A5), gauche_0=analogRead(A4);
   int droite_3=analogRead(A0), droite_2=analogRead(A1), droite_1=analogRead(A2), droite_0=analogRead(A3);
-  if((gauche_0<500 && gauche_1<500 && gauche_2<500) || (droite_0<500 && droite_1<500 && droite_2<500)){
+  if((gauche_3>=500) && (droite_3>=500)&& fm==0){
+    fm=1;
     return 1;
   }
-  else {
+  else if (gauche_3<500 && droite_3<500){
+    fm=0;}
     return 0;
-  }
 }
 

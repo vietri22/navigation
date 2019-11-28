@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <arduino.h>
 #include "capteur.h"
+#include "move.h"
 void PID_gauche(int VitesseC, int Erreur, int SommeErreurs, float VitesseV)
 {
   const int MoteurGauche=0;
@@ -32,16 +33,16 @@ void PID_droite(int VitesseC, long long Erreur, long long SommeErreurs, float Vi
   ENCODER_Reset(MoteurDroite);
 }
 
-void PID_capteur()
+void PID_capteur(int dis)
 {
   int gauche_3=analogRead(A7), gauche_2=analogRead(A6), gauche_1=analogRead(A5), gauche_0=analogRead(A4);
   int droite_3=analogRead(A0), droite_2=analogRead(A1), droite_1=analogRead(A2), droite_0=analogRead(A3);
   float VitesseG=0, VitesseD=0;
   long long ErreurCaptP=0, ErreurCaptI=0, ErreurCaptD=0;
-  const float KP = 0.00001, KI = 0.00000, KD=0.00001;//a travailler
+  const float KP = 0.00002, KI = 0.00000, KD=0.00001;//a travailler
    const int BUMPER_ARRIERE=3, MoteurGauche=0, MoteurDroit=1;
 
-   while(ROBUS_IsBumper(BUMPER_ARRIERE)==0) //|| (analogRead(A7)<500 && analogRead(A0)<500))
+   while(ROBUS_IsBumper(BUMPER_ARRIERE)==0 && SONAR_GetRange(0)>dis) //|| (analogRead(A7)<500 && analogRead(A0)<500))
     {
       gauche_2=analogRead(A6);
       gauche_1=analogRead(A5);
@@ -70,6 +71,7 @@ void PID_capteur()
 }
 void lineCount(int targetIndex)
 {
+  int fm=0;
   int index=0;
   int gauche_3=analogRead(A7), gauche_2=analogRead(A6), gauche_1=analogRead(A5), gauche_0=analogRead(A4);
   int droite_3=analogRead(A0), droite_2=analogRead(A1), droite_1=analogRead(A2), droite_0=analogRead(A3);
@@ -78,7 +80,7 @@ void lineCount(int targetIndex)
   const float KP = 0.00001, KI = 0.00000, KD=0.00001;//a travailler
   const int BUMPER_ARRIERE=3, MoteurGauche=0, MoteurDroit=1;
   while(index!=targetIndex){
-    while(checkline()==0 || ROBUS_IsBumper(BUMPER_ARRIERE)==0) //|| (analogRead(A7)<500 && analogRead(A0)<500))
+    while(checkline(fm)==0 && ROBUS_IsBumper(BUMPER_ARRIERE)==0) //|| (analogRead(A7)<500 && analogRead(A0)<500))
     {
       gauche_2=analogRead(A6);
       gauche_1=analogRead(A5);

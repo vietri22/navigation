@@ -20,4 +20,5 @@ entrer : angle
 sortie: rien
 */
 void turnAngle(int angle);
+void reculePID(int distance);
 #endif
