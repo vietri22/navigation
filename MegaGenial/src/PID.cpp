@@ -39,7 +39,7 @@ void PID_capteur(int dis)
   int droite_3=analogRead(A0), droite_2=analogRead(A1), droite_1=analogRead(A2), droite_0=analogRead(A3);
   float VitesseG=0, VitesseD=0;
   long long ErreurCaptP=0, ErreurCaptI=0, ErreurCaptD=0;
-  const float KP = 0.00002, KI = 0.00000, KD=0.00001;//a travailler
+  const float KP = 0.00001, KI = 0.00000, KD=0.00001;//a travailler
    const int BUMPER_ARRIERE=3, MoteurGauche=0, MoteurDroit=1;
 
    while(ROBUS_IsBumper(BUMPER_ARRIERE)==0 && SONAR_GetRange(0)>dis) //|| (analogRead(A7)<500 && analogRead(A0)<500))
